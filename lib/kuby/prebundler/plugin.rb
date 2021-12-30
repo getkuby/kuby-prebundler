@@ -1,0 +1,19 @@
+require 'kuby'
+
+module Kuby
+  module Prebundler
+    class Plugin < ::Kuby::Plugin
+      def after_configuration
+        bundler_phase = docker.bundler_phase
+        docker.delete(:bundler_phase)
+        docker.insert(:bundler_phase, PrebundlerPhase.new(environment), after: :package_phase)
+      end
+
+      private
+
+      def docker
+        environment.docker
+      end
+    end
+  end
+end
