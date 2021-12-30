@@ -13,7 +13,6 @@ Gem::Specification.new do |s|
   s.platform = Gem::Platform::RUBY
 
   s.add_dependency 'kuby-core', '< 1.0'
-  s.add_dependency 'prebundler', '~> 0.12'
 
   s.require_path = 'lib'
   s.files = Dir['{lib,spec}/**/*', 'Gemfile', 'LICENSE', 'CHANGELOG.md', 'README.md', 'Rakefile', 'kuby-prebundler.gemspec']
