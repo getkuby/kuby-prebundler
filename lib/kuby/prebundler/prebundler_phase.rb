@@ -27,6 +27,7 @@ module Kuby
         # dockerfile.run('gem', 'install', 'prebundler', '-v', "'< 1'")
         dockerfile.run('gem', 'install', 'specific_install')
         dockerfile.run('gem', 'specific_install', '-l', 'https://github.com/camertron/prebundler.git', '-b', 'eval_gemfile')
+        dockerfile.env('GLI_DEBUG', 'true')
 
         bundler_phase.apply_to(dockerfile)
 
