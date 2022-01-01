@@ -7,7 +7,7 @@ module Kuby
 
       def initialize(environment, bundler_phase)
         @bundler_phase = bundler_phase
-        @bundler_phase.executable = 'prebundler'
+        @bundler_phase.executable = 'prebundle'
 
         super(environment)
       end
