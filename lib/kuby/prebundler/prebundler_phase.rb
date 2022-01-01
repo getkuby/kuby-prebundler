@@ -25,10 +25,7 @@ module Kuby
         dockerfile.arg('PREBUNDLER_SECRET_ACCESS_KEY')
 
         dockerfile.copy(prebundle_config || '.prebundle_config', '.')
-        # dockerfile.run('gem', 'install', 'prebundler', '-v', "'< 1'")
-        dockerfile.run('gem', 'install', 'specific_install')
-        dockerfile.run('gem', 'specific_install', '-l', 'https://github.com/camertron/prebundler.git', '-b', 'master')
-        dockerfile.env('GLI_DEBUG', 'true')
+        dockerfile.run('gem', 'install', 'prebundler', '-v', "'< 1'")
 
         bundler_phase.apply_to(dockerfile)
       end
