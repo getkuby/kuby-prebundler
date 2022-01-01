@@ -7,6 +7,7 @@ module Kuby
 
       def initialize(environment, bundler_phase)
         @bundler_phase = bundler_phase
+        @bundler_phase.executable = 'prebundler'
 
         super(environment)
       end
@@ -30,14 +31,6 @@ module Kuby
         dockerfile.env('GLI_DEBUG', 'true')
 
         bundler_phase.apply_to(dockerfile)
-
-        dockerfile.commands.each do |cmd|
-          next unless cmd.is_a?(Kuby::Docker::Dockerfile::Run)
-
-          if cmd.args[0..1] == ['bundle', 'install']
-            cmd.args[0] = 'prebundle'
-          end
-        end
       end
     end
   end
