@@ -11,8 +11,11 @@ module Kuby
 
       def after_configuration
         bundler_phase = docker.bundler_phase
-        docker.delete(:bundler_phase)
-        docker.insert(:bundler_phase, PrebundlerPhase.new(environment, bundler_phase, config), after: :package_phase)
+
+        docker.replace(
+          :bundler_phase,
+          PrebundlerPhase.new(environment, bundler_phase, config)
+        )
       end
 
       private
