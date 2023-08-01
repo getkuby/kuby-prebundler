@@ -3,11 +3,12 @@ require 'kuby'
 module Kuby
   module Prebundler
     class PrebundlerPhase < ::Kuby::Docker::Layer
-      attr_accessor :prebundle_config, :bundler_phase
+      attr_reader :bundler_phase, :config
 
-      def initialize(environment, bundler_phase)
+      def initialize(environment, bundler_phase, config)
         @bundler_phase = bundler_phase
         @bundler_phase.executable = 'prebundle'
+        @config = config
 
         super(environment)
       end
@@ -24,7 +25,7 @@ module Kuby
         dockerfile.arg('PREBUNDLER_ACCESS_KEY_ID')
         dockerfile.arg('PREBUNDLER_SECRET_ACCESS_KEY')
 
-        dockerfile.copy(prebundle_config || '.prebundle_config', '.')
+        dockerfile.copy(config.config_path || '.prebundle_config', '.')
         dockerfile.run('gem', 'install', 'prebundler', '-v', "'< 1'")
 
         bundler_phase.apply_to(dockerfile)
