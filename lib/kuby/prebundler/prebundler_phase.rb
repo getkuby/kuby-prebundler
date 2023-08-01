@@ -26,7 +26,8 @@ module Kuby
         dockerfile.arg('PREBUNDLER_SECRET_ACCESS_KEY')
 
         dockerfile.copy(config.config_path || '.prebundle_config', '.')
-        dockerfile.run('gem', 'install', 'prebundler', '-v', "'< 1'")
+        # dockerfile.run('gem', 'install', 'prebundler', '-v', "'< 1'")
+        dockerfile.run(["(unset BUNDLE_GEMFILE; unset BUNDLE_WITHOUT; git clone --branch eval_gemfile_set_pwd https://github.com/camertron/prebundler.git && cd prebundler && bundle && bundle exec rake build && gem install pkg/prebundler-0.15.0.gem && cd .. && rm -rf prebundler)"])
 
         bundler_phase.apply_to(dockerfile)
       end
